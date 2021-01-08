@@ -1,0 +1,21 @@
+---
+version: '3'
+services:
+  ozwd:
+    image: openzwave/ozwdaemon:allinone-latest
+    container_name: "ozwd"
+    security_opt:
+      - seccomp:unconfined
+    devices:
+      - "/dev/ttyAMA0"
+    volumes:
+      - ./config:/opt/ozw/config
+    ports:
+      - "1983:1983"
+      - "5901:5901"
+      - "7800:7800"
+    environment:
+      - USB_PATH=/dev/ttyAMA0
+      - MQTT_SERVER
+      - OZW_NETWORK_KEY
+    restart: unless-stopped
